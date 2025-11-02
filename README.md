@@ -18,6 +18,9 @@ chmod +x local-install.sh
 # Start the application
 cd ~/pulse-bar-ai
 ./run.sh
+
+# OR if you're in the repository directory
+./start.sh
 ```
 
 ### Method 2: One-Line Remote Install
@@ -39,6 +42,11 @@ curl -fsSL https://raw.githubusercontent.com/opentab1/themega/main/install.sh | 
 ## ?? QUICK START
 
 ```bash
+# If installed via local-install.sh
+cd ~/pulse-bar-ai
+./run.sh
+
+# If running from repository directory
 ./start.sh
 ```
 
@@ -46,6 +54,8 @@ Access:
 - **Dashboard**: http://localhost:5173
 - **Camera Stream**: http://localhost:8000/stream
 - **API**: http://localhost:8000/api/dashboard
+
+> **Note**: If you encounter a Werkzeug production error, see [BACKEND_FIX.md](BACKEND_FIX.md) for the solution (already applied to latest version).
 
 ## 16 FEATURES
 
