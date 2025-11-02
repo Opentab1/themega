@@ -393,4 +393,4 @@ if __name__ == '__main__':
     print("?? PULSE BAR AI ? Backend Starting")
     print("?? Camera stream: http://localhost:8000/stream")
     print("?? API: http://localhost:8000/api/dashboard")
-    socketio.run(app, host='0.0.0.0', port=8000, debug=False)
+    socketio.run(app, host='0.0.0.0', port=8000, debug=False, allow_unsafe_werkzeug=True)
