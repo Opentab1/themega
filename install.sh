@@ -50,14 +50,34 @@ pip install smbus2==0.4.2 || echo "Warning: smbus2 installation failed (I2C feat
 pip install board==1.0 || echo "Warning: board installation failed"
 pip install adafruit-circuitpython-bme280==2.6.18 || echo "Warning: BME280 sensor support installation failed"
 
-# Create frontend
-mkdir -p frontend
+# Download application files from GitHub
+echo "Downloading application files..."
+REPO_URL="https://raw.githubusercontent.com/opentab1/themega/main"
+
+# Download backend files
+curl -fsSL "${REPO_URL}/backend/app.py" -o backend/app.py
+curl -fsSL "${REPO_URL}/backend/sensors.py" -o backend/sensors.py
+
+# Download frontend files
+mkdir -p frontend/src/components
+curl -fsSL "${REPO_URL}/frontend/package.json" -o frontend/package.json
+curl -fsSL "${REPO_URL}/frontend/vite.config.js" -o frontend/vite.config.js
+curl -fsSL "${REPO_URL}/frontend/index.html" -o frontend/index.html
+curl -fsSL "${REPO_URL}/frontend/src/main.jsx" -o frontend/src/main.jsx
+curl -fsSL "${REPO_URL}/frontend/src/App.jsx" -o frontend/src/App.jsx
+curl -fsSL "${REPO_URL}/frontend/src/index.css" -o frontend/src/index.css
+
+# Download frontend components
+for component in Dashboard CameraFeed OccupancyCounter TableGrid FlowPath Heatmap GlassFlow SongDetector StaffLeaderboard History SensorPanel TamperAlerts; do
+    curl -fsSL "${REPO_URL}/frontend/src/components/${component}.jsx" -o "frontend/src/components/${component}.jsx" || echo "Warning: Could not download ${component}.jsx"
+done
+
+# Install frontend dependencies
 cd frontend
-npm init -y
-npm install react react-dom vite @vitejs/plugin-react react-router-dom recharts socket.io-client axios lucide-react
+npm install
+cd ..
 
 # Create start script
-cd ..
 cat > start.sh << 'EOF'
 #!/bin/bash
 set -e

@@ -2,25 +2,39 @@
 
 **Prison-proof monitoring system with 16 live features, 30-day memory, and live camera feed.**
 
-## ? ONE-LINE INSTALL & AUTO-START
+## ? INSTALLATION
+
+### Method 1: Clone and Run (RECOMMENDED)
+
+```bash
+# Clone the repository
+git clone https://github.com/opentab1/themega.git pulse-bar-ai
+cd pulse-bar-ai
+
+# Run the local installation script
+chmod +x local-install.sh
+./local-install.sh
+
+# Start the application
+cd ~/pulse-bar-ai
+./run.sh
+```
+
+### Method 2: One-Line Remote Install
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/opentab1/themega/main/install.sh | bash
 ```
 
 **This will automatically:**
-1. Install all dependencies
-2. Set up the project
-3. Start the system immediately
+1. Install all system dependencies
+2. Download application files
+3. Set up Python virtual environment
+4. Install Python packages
+5. Install Node packages
+6. Start the system immediately
 
-Or manual installation:
-
-```bash
-git clone https://github.com/yourname/pulse-bar-ai.git
-cd pulse-bar-ai
-chmod +x start.sh
-./start.sh
-```
+> **Note**: If you encounter issues with the remote install, use Method 1 instead. See [INSTALLATION_FIX.md](INSTALLATION_FIX.md) for troubleshooting.
 
 ## ?? QUICK START
 
