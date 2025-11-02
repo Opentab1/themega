@@ -5,7 +5,7 @@
 ## ? ONE-LINE INSTALL
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yourname/pulse-bar-ai/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/opentab1/themega/main/install.sh | bash
 ```
 
 Or manual installation:
