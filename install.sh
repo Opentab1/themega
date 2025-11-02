@@ -60,17 +60,52 @@ npm install react react-dom vite @vitejs/plugin-react react-router-dom recharts 
 cd ..
 cat > start.sh << 'EOF'
 #!/bin/bash
+set -e
+
+echo "?? PULSE BAR AI ? STARTING..."
+echo ""
+
 cd "$(dirname "$0")"
 source venv/bin/activate
+
+echo "? Starting backend server..."
 python3 backend/app.py &
+BACKEND_PID=$!
+
+sleep 3
+
+echo "? Starting frontend dev server..."
 cd frontend && npm run dev &
-echo "?? PULSE BAR AI RUNNING"
-echo "?? Dashboard: http://localhost:5173"
-echo "?? Camera: http://localhost:8000/stream"
+FRONTEND_PID=$!
+cd ..
+
+sleep 2
+echo ""
+echo "???????????????????????????????????"
+echo "?? PULSE BAR AI IS NOW RUNNING!"
+echo "???????????????????????????????????"
+echo ""
+echo "?? Dashboard:    http://localhost:5173"
+echo "?? Camera Feed:  http://localhost:8000/stream"
+echo "?? API Docs:     http://localhost:8000/api/dashboard"
+echo ""
+echo "???????????????????????????????????"
+echo "Press Ctrl+C to stop all services"
+echo ""
+
+# Handle shutdown gracefully
+trap "echo ''; echo '? Stopping services...'; kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit" INT TERM
+
 wait
 EOF
 
 chmod +x start.sh
 
 echo "? INSTALLATION COMPLETE"
-echo "Run: cd pulse-bar-ai && ./start.sh"
+echo ""
+echo "?? AUTO-STARTING PULSE BAR AI..."
+echo ""
+sleep 2
+
+# Auto-start the system
+./start.sh

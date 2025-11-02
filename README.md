@@ -2,11 +2,16 @@
 
 **Prison-proof monitoring system with 16 live features, 30-day memory, and live camera feed.**
 
-## ? ONE-LINE INSTALL
+## ? ONE-LINE INSTALL & AUTO-START
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/opentab1/themega/main/install.sh | bash
 ```
+
+**This will automatically:**
+1. Install all dependencies
+2. Set up the project
+3. Start the system immediately
 
 Or manual installation:
 

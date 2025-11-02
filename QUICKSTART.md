@@ -2,10 +2,15 @@
 
 ## Installation (Choose One Method)
 
-### Method 1: One-Line Install
+### Method 1: One-Line Install (AUTO-STARTS!)
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yourname/pulse-bar-ai/main/install.sh | bash
-cd pulse-bar-ai
+curl -fsSL https://raw.githubusercontent.com/opentab1/themega/main/install.sh | bash
+```
+**That's it!** The system will automatically start after installation.
+
+To restart later:
+```bash
+cd /tmp/pulse-bar-ai
 ./start.sh
 ```
 
