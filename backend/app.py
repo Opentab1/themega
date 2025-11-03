@@ -355,35 +355,55 @@ def tamper_alert():
 # Simulate sensor updates
 def simulate_sensors():
     """Background thread to simulate sensor readings"""
+    print("?? Sensor simulation thread started")
+    time.sleep(2)  # Wait for socketio to be ready
+    
     while True:
-        time.sleep(5)
-        
-        # Random variations
-        state['temperature'] = round(22 + np.random.uniform(-2, 2), 1)
-        state['decibel'] = int(75 + np.random.uniform(-10, 15))
-        state['lux'] = int(450 + np.random.uniform(-50, 100))
-        
-        # Overheat check
-        if state['temperature'] > 150:
-            socketio.emit('alert', {
-                'type': 'overheat',
+        try:
+            # Random variations
+            state['temperature'] = round(22 + np.random.uniform(-2, 2), 1)
+            state['decibel'] = int(75 + np.random.uniform(-10, 15))
+            state['lux'] = int(450 + np.random.uniform(-50, 100))
+            
+            # Overheat check
+            if state['temperature'] > 150:
+                socketio.emit('alert', {
+                    'type': 'overheat',
+                    'temperature': state['temperature'],
+                    'message': 'AUTO-SHUTDOWN TRIGGERED'
+                })
+            
+            # Broadcast updates
+            socketio.emit('sensor_update', {
                 'temperature': state['temperature'],
-                'message': 'AUTO-SHUTDOWN TRIGGERED'
+                'decibel': state['decibel'],
+                'lux': state['lux']
             })
+            
+            # Also log occasionally
+            if int(time.time()) % 30 == 0:
+                print(f"?? Sensors: {state['temperature']}?C, {state['decibel']}dB, {state['lux']}lx")
+                
+        except Exception as e:
+            print(f"?? Sensor error: {e}")
         
-        # Broadcast updates
-        socketio.emit('sensor_update', {
-            'temperature': state['temperature'],
-            'decibel': state['decibel'],
-            'lux': state['lux']
-        })
+        time.sleep(5)
 
-threading.Thread(target=simulate_sensors, daemon=True).start()
+# Start sensor thread
+sensor_thread = threading.Thread(target=simulate_sensors, daemon=True)
+sensor_thread.start()
+print("?? Sensor monitoring initialized")
 
 @socketio.on('connect')
 def handle_connect():
-    print('Client connected')
+    print('?? Client connected')
     emit('connected', {'status': 'ok'})
+    # Send immediate sensor update on connection
+    emit('sensor_update', {
+        'temperature': state['temperature'],
+        'decibel': state['decibel'],
+        'lux': state['lux']
+    })
 
 @socketio.on('disconnect')
 def handle_disconnect():
